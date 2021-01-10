@@ -1,4 +1,4 @@
-package com.kumar.springboot.entity;
+package com.kumar.springboot.employee.entity;
 
 public class DemoData {
 	int id;
