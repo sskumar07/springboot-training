@@ -1,20 +1,21 @@
 package com.kumar.springboot;
 
 
-import javax.sql.DataSource;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 public class SpringbootTrainingApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringbootTrainingApplication.class, args);
+	}
+	
+	@Bean
+	public RestTemplate restTemplate() {
+	    return new RestTemplate();
 	}
 	
 }

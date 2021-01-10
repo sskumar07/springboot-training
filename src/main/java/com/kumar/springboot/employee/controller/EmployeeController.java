@@ -44,7 +44,6 @@ public class EmployeeController {
 	@PostMapping("/addEmployee")
 	public Employee addEmployee(@RequestBody Employee employee) {
 		return employeeService.addEmployee(employee);
-		
 	}
 	
 	@PutMapping("/updateEmployee")
