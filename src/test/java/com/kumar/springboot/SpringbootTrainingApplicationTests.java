@@ -1,54 +1,42 @@
 package com.kumar.springboot;
 
-import static org.mockito.Mockito.when;
-
 import java.util.Optional;
 
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBeans;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.kumar.springboot.employee.entity.Employee;
-import com.kumar.springboot.employee.repository.EmployeeRepository;
-import com.kumar.springboot.employee.service.EmployeeService;
+import com.kumar.springboot.employee.entity.ProductRating;
+import com.kumar.springboot.employee.entity.ProductRatingKey;
+import com.kumar.springboot.employee.repository.CompositeKeyRepository;
+import com.kumar.springboot.employee.repository.CustomerRepository;
 
 @SpringBootTest
 class SpringbootTrainingApplicationTests {
 
 	@Autowired
-	RestTemplate restTemplate;
+	CompositeKeyRepository compositeRepository;
 	
-	String url = "http://localhost:8081/";
-	
-	@Test
-	public void testGetEmployee() {
-		Employee employee = restTemplate.getForObject(url + "getEmployee/1", Employee.class);
-		Assertions.assertNotNull(employee);
+	@Autowired
+	CustomerRepository customerRepository;
+
+	//@Test
+	public void testCompositeKey() {
+		Optional<ProductRating> a = compositeRepository.findById(new ProductRatingKey(1,1));
+		System.out.println(a.get().getRating());
 	}
 	
-	
-	
-	@Mock
-	EmployeeRepository employeeRepository;
-	
-	@InjectMocks
-	EmployeeService employeeService;
+	//@Test
+	public void testCascade() {
+		customerRepository.deleteById(1);
+	}
 	
 	@Test
-	public void testMockGetEmployee() {
-		Employee employee = new Employee(1, "Saravanan", 30000);
-		Optional<Employee> employeeOptional = Optional.of(employee);
-		
-		when(employeeRepository.findById(1)).thenReturn(employeeOptional);
-//		Employee employees = restTemplate.getForObject(url + "getEmployee/1", Employee.class);
-		
-		Employee employees = employeeService.getEmployee(employee.getId());
-		System.out.println(employees.getName());
-		Assertions.assertNotNull(employee);
+	@Transactional("employeeTransactionManager")
+	public void testCustomQuery() {
+		customerRepository.getAllData();
 	}
 }
