@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.kumar.springboot.employee.entity.Employee;
 import com.kumar.springboot.employee.repository.EmployeeRepository;
-import com.kumar.springboot.user.entity.User;
-import com.kumar.springboot.user.repository.UserRepository;
+import com.kumar.springboot.user.entity.User1;
+import com.kumar.springboot.user.repository.User1Repository;
 
 @SpringBootTest
 @EnableTransactionManagement
@@ -21,7 +21,7 @@ public class MultipleDBTest {
 	private EmployeeRepository employeeRepository;
 
 	@Autowired
-	private UserRepository userRepository;
+	private User1Repository userRepository;
 
 	@Test
 	public void testEmployee() {
@@ -34,9 +34,9 @@ public class MultipleDBTest {
 
 	@Test
 	public void testUser() {
-		User user = new User(1, "Kumar");
+		User1 user = new User1(1, "Kumar");
 		userRepository.save(user);
-		User data = userRepository.findById(user.getId()).get();
+		User1 data = userRepository.findById(user.getId()).get();
 		System.out.println(data.getName());
 		Assertions.assertNotNull(userRepository.findById(user.getId()).get());
 	}
